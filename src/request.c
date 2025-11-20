@@ -19,9 +19,9 @@ static size_t write_callback(void *contents, size_t size, size_t nmemb,
   struct MemoryStruct *mem = (struct MemoryStruct *)userp;
 
   ptr = (char *)realloc(mem->memory, mem->size + realsize + 1);
-  if (ptr == NULL) {
+  if (!ptr) {
     fprintf(stderr, "Erreur : mémoire insuffisante dans write_callback\n");
-    return 0; // Arrêt transfert pour libcurl
+    return 0;
   }
 
   mem->memory = ptr;
@@ -80,7 +80,8 @@ CURLcode do_request(const char *stop_point, char **content,
   if (res == CURLE_OK) {
     *content = chunk.memory;
     *content_size = chunk.size;
-    printf("conten : %s\n", *content);
+    // DEBUG
+    //  printf("content : %s\n", *content);
   } else {
     free(chunk.memory);
     *content = NULL;

@@ -24,9 +24,11 @@ int main(void) {
     fprintf(stderr, "Error: %s\n", curl_easy_strerror(res));
     return (1);
   } else {
-    print_all_next_passages(content);
-    print_next_passage(content);
-    print_last_passage(content);
+    // FIND GOOD HEADER TO PRINT
+    print_ascii_tag();
+    print_next_passages_clichy_ligne_14(content);
+    print_last_passages_clichy_ligne_14(content);
+    // print_all_next_passages_of_station(content);
     free(content);
   }
   return 0;

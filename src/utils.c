@@ -12,6 +12,20 @@
 
 #include "../includes/ratp.h"
 
+void print_ascii_tag(void) {
+  printf(COLOR_GREEN);
+  printf("                      888                   \n");
+  printf("                     888                    \n");
+  printf("                     888                    \n");
+  printf("88888b.d88b.  .d88b. 888888888d888 .d88b.  \n");
+  printf("888 \"888 \"88bd8P  Y8b888   888P\"  d88\"\"88b \n");
+  printf("888  888  88888888888888   888    888  888 \n");
+  printf("888  888  888Y8b.    Y88b. 888    Y88..88P \n");
+  printf("888  888  888 \"Y8888  \"Y888888     \"Y88P\"  \n");
+  printf(COLOR_RESET);
+  printf("\n");
+}
+
 char *trim(char *str) {
   char *end;
 
@@ -116,4 +130,93 @@ void print_formatted_datetime(const char *iso) {
 
   strftime(out, sizeof(out), "%d/%m/%Y %H:%M", local);
   printf("%s\n", out);
+}
+
+void print_formatted_time_only(const char *iso) {
+  struct tm tm;
+  time_t t;
+  char out[64];
+  char buf[32];
+  const char *p = iso;
+
+  // Copier sans fractions de seconde ni Z
+  if (strchr(iso, '.')) {
+    size_t len = strchr(iso, '.') - iso;
+    if (iso[len + 1] == 'Z')
+      strncpy(buf, iso, len);
+    else
+      strncpy(buf, iso, len);
+    buf[len] = '\0';
+    p = buf;
+  } else {
+    size_t len = strlen(iso);
+    if (iso[len - 1] == 'Z') {
+      strncpy(buf, iso, len - 1);
+      buf[len - 1] = '\0';
+      p = buf;
+    }
+  }
+
+  memset(&tm, 0, sizeof(tm));
+  if (strptime(p, "%Y-%m-%dT%H:%M:%S", &tm) == NULL) {
+    printf("%s\n", iso); // si pas parsé, affichage brut
+    return;
+  }
+
+  t = timegm(&tm);
+
+  struct tm *local = localtime(&t);
+  if (!local) {
+    printf("Erreur conversion temps\n");
+    return;
+  }
+
+  // Format heure:minute seulement
+  strftime(out, sizeof(out), "%H:%M", local);
+  printf("%s", out); // Sans saut de ligne pour concaténation
+}
+
+void print_formatted_time_only_colored(const char *iso, const char *color) {
+  struct tm tm;
+  time_t t;
+  char out[64];
+  char buf[32];
+  const char *p = iso;
+
+  // Copier sans fractions de seconde ni Z
+  if (strchr(iso, '.')) {
+    size_t len = strchr(iso, '.') - iso;
+    if (iso[len + 1] == 'Z')
+      strncpy(buf, iso, len);
+    else
+      strncpy(buf, iso, len);
+    buf[len] = '\0';
+    p = buf;
+  } else {
+    size_t len = strlen(iso);
+    if (iso[len - 1] == 'Z') {
+      strncpy(buf, iso, len - 1);
+      buf[len - 1] = '\0';
+      p = buf;
+    }
+  }
+
+  memset(&tm, 0, sizeof(tm));
+  if (strptime(p, "%Y-%m-%dT%H:%M:%S", &tm) == NULL) {
+    printf("%s\n", iso); // si pas parsé, affichage brut
+    return;
+  }
+
+  t = timegm(&tm);
+
+  struct tm *local = localtime(&t);
+  if (!local) {
+    printf("Erreur conversion temps\n");
+    return;
+  }
+
+  strftime(out, sizeof(out), "%H:%M", local);
+
+  // Affichage couleur + heure + reset
+  printf("%s%s%s", color, out, COLOR_RESET);
 }
