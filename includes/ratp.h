@@ -21,7 +21,7 @@
 #include <strings.h>
 #include <time.h>
 
-#define APIKEY "METTRE CLEF API"
+#define APIKEY "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 #define BUFFER_SIZE 20000
 
 #define COLOR_YELLOW "\x1b[33m"
@@ -33,18 +33,6 @@ struct MemoryStruct {
   char *memory;
   size_t size;
 };
-
-typedef struct {
-  char direction[128];
-  const char *time_str;
-  time_t time_val;
-} NextPassageInfo;
-
-typedef struct {
-  char direction[128];
-  const char *time_str;
-  time_t time_val;
-} LastPassageInfo;
 
 CURLcode do_request(const char *stop_point, char **content,
                     size_t *content_size);
