@@ -1,0 +1,70 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g",
+      "-Iincludes",
+      "-c",
+      "-o",
+      "obj/src/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/fantomas/coding_lab/42-back-to-home",
+    "file": "/home/fantomas/coding_lab/42-back-to-home/src/main.c",
+    "output": "/home/fantomas/coding_lab/42-back-to-home/obj/src/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g",
+      "-Iincludes",
+      "-c",
+      "-o",
+      "obj/src/search_func.o",
+      "src/search_func.c"
+    ],
+    "directory": "/home/fantomas/coding_lab/42-back-to-home",
+    "file": "/home/fantomas/coding_lab/42-back-to-home/src/search_func.c",
+    "output": "/home/fantomas/coding_lab/42-back-to-home/obj/src/search_func.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g",
+      "-Iincludes",
+      "-c",
+      "-o",
+      "obj/src/utils.o",
+      "src/utils.c"
+    ],
+    "directory": "/home/fantomas/coding_lab/42-back-to-home",
+    "file": "/home/fantomas/coding_lab/42-back-to-home/src/utils.c",
+    "output": "/home/fantomas/coding_lab/42-back-to-home/obj/src/utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g",
+      "-Iincludes",
+      "-c",
+      "-o",
+      "obj/src/request.o",
+      "src/request.c"
+    ],
+    "directory": "/home/fantomas/coding_lab/42-back-to-home",
+    "file": "/home/fantomas/coding_lab/42-back-to-home/src/request.c",
+    "output": "/home/fantomas/coding_lab/42-back-to-home/obj/src/request.o"
+  }
+]

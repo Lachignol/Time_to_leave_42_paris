@@ -38,7 +38,9 @@ void print_last_passages_clichy_ligne_14(const char *json) {
   char *lastTimeADO = NULL;
 
   int deliveriesCount = cJSON_GetArraySize(stopMonitoring);
+
   for (int i = 0; i < deliveriesCount; i++) {
+
     cJSON *delivery = cJSON_GetArrayItem(stopMonitoring, i);
     cJSON *visits =
         delivery ? cJSON_GetObjectItem(delivery, "MonitoredStopVisit") : NULL;
@@ -46,6 +48,7 @@ void print_last_passages_clichy_ligne_14(const char *json) {
       continue;
 
     int visitCount = cJSON_GetArraySize(visits);
+
     for (int j = 0; j < visitCount; j++) {
       cJSON *visit = cJSON_GetArrayItem(visits, j);
       cJSON *journey =
@@ -64,9 +67,11 @@ void print_last_passages_clichy_ligne_14(const char *json) {
       cJSON *call = cJSON_GetObjectItem(journey, "MonitoredCall");
       if (!call)
         continue;
+
       cJSON *stopPoints = cJSON_GetObjectItem(call, "StopPointName");
       if (!stopPoints || !cJSON_IsArray(stopPoints))
         continue;
+
       cJSON *first_stop = cJSON_GetArrayItem(stopPoints, 0);
       cJSON *stop_val =
           first_stop ? cJSON_GetObjectItem(first_stop, "value") : NULL;
@@ -77,6 +82,7 @@ void print_last_passages_clichy_ligne_14(const char *json) {
       cJSON *dest_array = cJSON_GetObjectItem(journey, "DirectionName");
       if (!dest_array || !cJSON_IsArray(dest_array))
         continue;
+
       cJSON *first_dest = cJSON_GetArrayItem(dest_array, 0);
       cJSON *val = first_dest ? cJSON_GetObjectItem(first_dest, "value") : NULL;
       if (!val || !val->valuestring)
@@ -108,25 +114,6 @@ void print_last_passages_clichy_ligne_14(const char *json) {
 
   printf(COLOR_YELLOW "─────────────────────── LIGNE 14 LAST STOPS "
                       "─────────────────────────\n" COLOR_RESET);
-  if (lastVisitSDP) {
-    cJSON *journey =
-        cJSON_GetObjectItem(lastVisitSDP, "MonitoredVehicleJourney");
-    cJSON *call = cJSON_GetObjectItem(journey, "MonitoredCall");
-    cJSON *expected = cJSON_GetObjectItem(call, "ExpectedDepartureTime");
-
-    printf(COLOR_GREEN "►" COLOR_RESET " Direction :" COLOR_GREEN
-                       " %-25s- " COLOR_RESET "Arrivée : ",
-           "Saint-Denis - Pleyel");
-
-    print_formatted_time_only_colored(expected->valuestring, COLOR_GREEN);
-    printf("\n");
-  } else {
-    printf("  Aucun passage trouvé pour Saint-Denis - Pleyel.\n\n");
-  }
-  printf(COLOR_YELLOW
-         "───────────────────────────────────────────────────────────────────"
-         "──\n" COLOR_RESET);
-
   if (lastVisitADO) {
     cJSON *journey =
         cJSON_GetObjectItem(lastVisitADO, "MonitoredVehicleJourney");
@@ -146,6 +133,25 @@ void print_last_passages_clichy_ligne_14(const char *json) {
   printf(COLOR_YELLOW
          "───────────────────────────────────────────────────────────────────"
          "──\n" COLOR_RESET);
+  if (lastVisitSDP) {
+    cJSON *journey =
+        cJSON_GetObjectItem(lastVisitSDP, "MonitoredVehicleJourney");
+    cJSON *call = cJSON_GetObjectItem(journey, "MonitoredCall");
+    cJSON *expected = cJSON_GetObjectItem(call, "ExpectedDepartureTime");
+
+    printf(COLOR_GREEN "►" COLOR_RESET " Direction :" COLOR_GREEN
+                       " %-25s- " COLOR_RESET "Arrivée : ",
+           "Saint-Denis - Pleyel");
+
+    print_formatted_time_only_colored(expected->valuestring, COLOR_GREEN);
+    printf("\n");
+  } else {
+    printf("  Aucun passage trouvé pour Saint-Denis - Pleyel.\n\n");
+  }
+  printf(COLOR_YELLOW
+         "───────────────────────────────────────────────────────────────────"
+         "──\n" COLOR_RESET);
+
   cJSON_Delete(root);
 }
 
@@ -198,9 +204,11 @@ void print_next_passages_clichy_ligne_14(const char *json) {
     cJSON *call = cJSON_GetObjectItem(journey, "MonitoredCall");
     if (!call)
       continue;
+
     cJSON *stopPoints = cJSON_GetObjectItem(call, "StopPointName");
     if (!stopPoints || !cJSON_IsArray(stopPoints))
       continue;
+
     cJSON *first_stop = cJSON_GetArrayItem(stopPoints, 0);
     cJSON *stop_val =
         first_stop ? cJSON_GetObjectItem(first_stop, "value") : NULL;
@@ -237,19 +245,7 @@ void print_next_passages_clichy_ligne_14(const char *json) {
     if (!expected || !expected->valuestring)
       continue;
 
-    if (strcmp(direction, "Saint-Denis - Pleyel") == 0) {
-
-      printf(COLOR_GREEN "►" COLOR_RESET " Direction :" COLOR_GREEN
-                         " %-25s- " COLOR_RESET "Arrivée : ",
-             "Saint-Denis - Pleyel");
-
-      print_formatted_time_only_colored(expected->valuestring, COLOR_GREEN);
-      printf("\n");
-      printf(
-          COLOR_YELLOW
-          "───────────────────────────────────────────────────────────────────"
-          "──\n" COLOR_RESET);
-    } else if (strcmp(direction, "Aéroport d'Orly") == 0) {
+    if (strcmp(direction, "Aéroport d'Orly") == 0) {
 
       printf(COLOR_BLUE "►" COLOR_RESET " Direction :" COLOR_BLUE
                         " %-25s - " COLOR_RESET "Arrivée : ",
@@ -261,6 +257,18 @@ void print_next_passages_clichy_ligne_14(const char *json) {
           COLOR_YELLOW
           "───────────────────────────────────────────────────────────────────"
           "──\n" COLOR_RESET);
+
+    } else if (strcmp(direction, "Saint-Denis - Pleyel") == 0) {
+
+      printf(COLOR_GREEN "►" COLOR_RESET " Direction :" COLOR_GREEN
+                         " %-25s- " COLOR_RESET "Arrivée : ",
+             "Saint-Denis - Pleyel");
+
+      print_formatted_time_only_colored(expected->valuestring, COLOR_GREEN);
+      printf("\n");
+      printf(COLOR_YELLOW "──────────────────────────────────────────────────"
+                          "─────────────────"
+                          "──\n" COLOR_RESET);
     } else {
       printf("  Ligne %d - Direction : %-25s - Passage à ", 14, direction);
       print_formatted_datetime(expected->valuestring);
