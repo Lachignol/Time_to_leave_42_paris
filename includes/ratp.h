@@ -13,7 +13,10 @@
 #ifndef _RATP_H
 #define _RATP_H
 
-#include <cjson/cJSON.h>
+#define _DEFAULT_SOURCE
+#define _XOPEN_SOURCE 700
+
+#include "cJSON.h"
 #include <curl/curl.h>
 #include <stdio.h>
 #include <stdlib.h>

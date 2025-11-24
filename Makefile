@@ -1,5 +1,5 @@
 NAME = Back2Home
-CC = c++ 
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g 
 MAKEFLAGS += --no-print-directory
 
