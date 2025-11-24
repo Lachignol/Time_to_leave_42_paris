@@ -24,7 +24,7 @@
 #include <strings.h>
 #include <time.h>
 
-#define APIKEY "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#define APIKEY "xxxxxxxxxxxxxxxxxxxxx"
 #define BUFFER_SIZE 20000
 
 #define COLOR_YELLOW "\x1b[33m"

@@ -31,7 +31,6 @@ void print_last_passages_clichy_ligne_14(const char *json) {
     return;
   }
 
-  // Variables pour mémoriser les derniers passages par direction
   cJSON *lastVisitSDP = NULL; // Saint-Denis - Pleyel
   cJSON *lastVisitADO = NULL; // Aéroport d'Orly
   char *lastTimeSDP = NULL;
@@ -218,7 +217,6 @@ void print_next_passages_clichy_ligne_14(const char *json) {
     if (strcmp(stop_val->valuestring, "Porte de Clichy") != 0)
       continue;
 
-    // Direction
     cJSON *dest_array = cJSON_GetObjectItem(journey, "DirectionName");
     const char *direction = "Inconnu";
     if (dest_array && cJSON_IsArray(dest_array)) {
@@ -231,7 +229,6 @@ void print_next_passages_clichy_ligne_14(const char *json) {
       }
     }
 
-    // Filtre sur les destinations officielles selon la ligne
     int keep = 0;
     if (strcmp(direction, "Saint-Denis - Pleyel") == 0 ||
         strcmp(direction, "Aéroport d'Orly") == 0) {

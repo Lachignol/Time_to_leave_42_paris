@@ -92,9 +92,9 @@ void print_formatted_datetime(const char *iso) {
   char buf[32];
   const char *p = iso;
 
-  // Copier une partie utile sans fractions de seconde (avant .) et sans Z
+  // filtrer la bonne partie avant (.) et sans Z
   if (strchr(iso, '.')) {
-    // Copier jusqu'au point avant la fraction
+    // copier la parti avant
     size_t len = strchr(iso, '.') - iso;
     if (iso[len + 1] == 'Z')
       strncpy(buf, iso, len);
@@ -103,7 +103,7 @@ void print_formatted_datetime(const char *iso) {
     buf[len] = '\0';
     p = buf;
   } else {
-    // Pas de fraction, enlever le Z si présent
+    // si pas de fraction, retirer le Z si present
     size_t len = strlen(iso);
     if (iso[len - 1] == 'Z') {
       strncpy(buf, iso, len - 1);
@@ -114,14 +114,14 @@ void print_formatted_datetime(const char *iso) {
 
   memset(&tm, 0, sizeof(tm));
   if (strptime(p, "%Y-%m-%dT%H:%M:%S", &tm) == NULL) {
-    printf("%s\n", iso); // pas parsé => afficher brut
+    printf("%s\n", iso);
     return;
   }
 
-  // Convertir temps UTC en time_t
-  t = timegm(&tm); // timegm gère le temps en UTC, pas mktime
+  // converssion temps UTC en time_t
+  t = timegm(&tm);
 
-  // Convertir en temps local pour affichage
+  // conversion en temps local
   struct tm *local = localtime(&t);
   if (!local) {
     printf("Erreur conversion temps\n");
@@ -139,7 +139,6 @@ void print_formatted_time_only(const char *iso) {
   char buf[32];
   const char *p = iso;
 
-  // Copier sans fractions de seconde ni Z
   if (strchr(iso, '.')) {
     size_t len = strchr(iso, '.') - iso;
     if (iso[len + 1] == 'Z')
@@ -159,21 +158,18 @@ void print_formatted_time_only(const char *iso) {
 
   memset(&tm, 0, sizeof(tm));
   if (strptime(p, "%Y-%m-%dT%H:%M:%S", &tm) == NULL) {
-    printf("%s\n", iso); // si pas parsé, affichage brut
+    printf("%s\n", iso);
     return;
   }
-
   t = timegm(&tm);
-
   struct tm *local = localtime(&t);
   if (!local) {
     printf("Erreur conversion temps\n");
     return;
   }
-
-  // Format heure:minute seulement
+  // format heure:minute
   strftime(out, sizeof(out), "%H:%M", local);
-  printf("%s", out); // Sans saut de ligne pour concaténation
+  printf("%s", out);
 }
 
 void print_formatted_time_only_colored(const char *iso, const char *color) {
@@ -183,7 +179,6 @@ void print_formatted_time_only_colored(const char *iso, const char *color) {
   char buf[32];
   const char *p = iso;
 
-  // Copier sans fractions de seconde ni Z
   if (strchr(iso, '.')) {
     size_t len = strchr(iso, '.') - iso;
     if (iso[len + 1] == 'Z')
@@ -200,23 +195,17 @@ void print_formatted_time_only_colored(const char *iso, const char *color) {
       p = buf;
     }
   }
-
   memset(&tm, 0, sizeof(tm));
   if (strptime(p, "%Y-%m-%dT%H:%M:%S", &tm) == NULL) {
-    printf("%s\n", iso); // si pas parsé, affichage brut
+    printf("%s\n", iso);
     return;
   }
-
   t = timegm(&tm);
-
   struct tm *local = localtime(&t);
   if (!local) {
     printf("Erreur conversion temps\n");
     return;
   }
-
   strftime(out, sizeof(out), "%H:%M", local);
-
-  // Affichage couleur + heure + reset
   printf("%s%s%s", color, out, COLOR_RESET);
 }

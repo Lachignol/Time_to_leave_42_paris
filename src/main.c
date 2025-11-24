@@ -24,7 +24,7 @@ int main(void) {
     fprintf(stderr, "Error: %s\n", curl_easy_strerror(res));
     return (1);
   } else {
-    // FIND GOOD HEADER TO PRINT
+    // checher un header plus cool
     print_ascii_tag();
     print_next_passages_clichy_ligne_14(content);
     print_last_passages_clichy_ligne_14(content);
